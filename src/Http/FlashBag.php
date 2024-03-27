@@ -27,6 +27,6 @@ class FlashBag {
         $bag = Request::session(self::NAME);
         unset($_SESSION[self::NAME]);
 
-        return $bag;
+        return $bag ?? [];
     }
 }
