@@ -1,4 +1,7 @@
-<?php namespace Flag\Framework\Core;
+<?php namespace Flag\Framework\Mvc;
+
+use Flag\Framework\Http\Request;
+use Flag\Framework\Http\Response;
 
 abstract class Controller {
 
@@ -7,7 +10,7 @@ abstract class Controller {
     }
 
     protected function render(string $name, array $data = null, bool $layout = true): void {
-        Response::render($name, $data, $layout);
+        View::render($name, $data, $layout);
     }
     
     protected function isPost(): bool {
@@ -19,6 +22,6 @@ abstract class Controller {
     }
 
     protected function json(mixed $data): void {
-        Response::json($data);
+        View::json($data);
     }
 }

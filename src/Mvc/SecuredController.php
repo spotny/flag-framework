@@ -1,4 +1,6 @@
-<?php namespace Flag\Framework\Core;
+<?php namespace Flag\Framework\Mvc;
+
+use Flag\Framework\Http\Request;
 
 abstract class SecuredController extends Controller {
 

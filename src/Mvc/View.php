@@ -1,19 +1,13 @@
-<?php namespace Flag\Framework\Core;
+<?php namespace Flag\Framework\Mvc;
 
-use Exception;
+use Flag\Framework\Http\Error\InternalServerErrorException;
 
-class Response {
-
-    public static function redirect(string $url): void {
-        header("Location: $url");
-        die();
-    }
-
+class View {
     public static function render(string $name, array $data = null, bool $layout = true): void {
         $path = "../views/$name.phtml";
     
         if (!file_exists($path)) {
-            throw new Exception('Internal Server Error', 500);
+            throw new InternalServerErrorException();
         }
     
         if (!is_null($data)) {

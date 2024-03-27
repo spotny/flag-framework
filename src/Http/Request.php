@@ -1,4 +1,4 @@
-<?php namespace Flag\Framework\Core;
+<?php namespace Flag\Framework\Http;
 
 class Request {
     

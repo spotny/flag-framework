@@ -1,7 +1,12 @@
 <?php namespace Flag\Framework\Core;
 
 use Exception;
+use Flag\Framework\Http\Error\HttpException;
+use Flag\Framework\Http\Error\InternalServerErrorException;
+use Flag\Framework\Router\Route;
+use Flag\Framework\Router\Router;
 use ReflectionClass;
+use ReflectionException;
 
 class Application {
 
@@ -17,32 +22,45 @@ class Application {
 
         try {
             $route = $this->router->getActive($path);
-            $this->callAction($route);
-        } catch (Exception $e) {
+            $this->call($route);
+        } catch (HttpException $e) {
             $this->showError($e);
         }
     }
 
-    private function callAction(array $route): void {
-        extract($route);
-
-        $reflector = new ReflectionClass($controller);
-
-        if (!$reflector->isInstantiable()) {
-            throw new Exception('Internal Server Error', 500);
+    private function call(Route $route): void {
+        if ($route->isCallable()) {
+            $action = $route->getCallable();
+            $action($route->getData());
         }
 
-        $instance = $reflector->newInstance();
-        $method = $reflector->getMethod($action);
+        $controller = $route->getController();
+        $action = $route->getAction();
 
-        $method->invoke($instance);
+        try {
+            $reflector = new ReflectionClass($controller);
+
+            if (!$reflector->isInstantiable()) {
+                throw new InternalServerErrorException();
+            }
+    
+            $instance = $reflector->newInstance();
+            $method = $reflector->getMethod($action);
+    
+            if ($route->hasData()) {
+                $method->invokeArgs($instance, $route->getData());
+            } else {
+                $method->invoke($instance);
+            }
+        } catch (ReflectionException $e) {
+            throw new InternalServerErrorException($e->getMessage());
+        }
     }
 
-    private function showError(Exception $e): void {
+    private function showError(HttpException $e): void {
         $code = $e->getCode();
         $message = $e->getMessage();
 
-        header("HTTP/1.1 $code $message");
         die("$code $message");
     }
 
