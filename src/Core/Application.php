@@ -3,7 +3,7 @@
 use Flag\Framework\Http\Error\HttpException;
 use Flag\Framework\Http\Error\InternalServerErrorException;
 use Flag\Framework\Router\Router;
-use Flagrow\Framework\Router\Route;
+use Flag\Framework\Router\Route;
 use ReflectionClass;
 use ReflectionException;
 
