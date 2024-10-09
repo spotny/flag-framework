@@ -1,5 +1,6 @@
 <?php namespace Flag\Framework\Mvc;
 
+use Flag\Framework\Http\FlashBag;
 use Flag\Framework\Http\Request;
 use Flag\Framework\Http\Response;
 
@@ -23,5 +24,9 @@ abstract class Controller {
 
     protected function json(mixed $data): void {
         View::json($data);
+    }
+
+    protected function addFlash(string $message, string $type = 'info'): void {
+        FlashBag::add($message, $type);
     }
 }
