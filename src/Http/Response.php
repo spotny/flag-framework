@@ -9,12 +9,16 @@ class Response {
         die();
     }
 
+    public static function header(string $name, string $value, bool $replace = true, int $code = 0): void {
+        header("$name: $value", $replace, $code);
+    }
+
     public static function contentType(string $type): void {
-        header('Content-Type: ' . $type);
+        self::header('Content-Type', $type);
     }
 
     public static function status(int $code, string $message): void {
-        header("HTTP/1.1 $code $message");
+        self::header("HTTP/1.1 $code $message", '');
     }
 
     public static function created(): void {
