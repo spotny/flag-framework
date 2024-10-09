@@ -1,4 +1,4 @@
-<?php namespace Flagrow\Framework\Router;
+<?php namespace Flag\Framework\Router;
 
 class Route {
     private mixed $endpoint;

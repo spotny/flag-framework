@@ -1,7 +1,7 @@
 <?php namespace Flag\Framework\Router;
       use Exception;
 use Flag\Framework\Http\Error\NotFoundException;
-use Flagrow\Framework\Router\Route;
+use Flag\Framework\Router\Route;
 
 class Router {
     
