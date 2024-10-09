@@ -23,7 +23,7 @@ class FlashBag {
         return Request::session(self::$name) && count(Request::session(self::$name)) > 0;
     }
 
-    public function get(): array {
+    public static function get(): array {
         $bag = Request::session(self::$name);
         Request::session(self::$name, []);
 
